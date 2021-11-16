@@ -3,7 +3,6 @@ require('express-async-errors')
 
 // express
 const express = require('express')
-const CustomError = require('./errors')
 const errors = require('./errors')
 
 const app = express()
@@ -18,11 +17,11 @@ const cors = require('cors')
 const connectDB = require('./db/connect')
 
 // routes
-// TODO auth
-// TODO users
+const authRoutes = require('./routes/authRoutes')
+// TODO::users
 
 //middleware
-// TODO auth
+// TODO::authMiddleware
 const notFoundMiddleware = require('./middleware/notFound')
 const errorHandlerMiddleware = require('./middleware/errorHandler')
 
@@ -37,6 +36,8 @@ app.use(cookieParser(process.env.JWT_SECRET))
 app.use('/test', (req, res) => {
   res.send('Test route')
 })
+
+app.use('/api/v1/auth', authRoutes)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
