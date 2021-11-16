@@ -70,31 +70,30 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Register Controller
 
-- [] create user
-- [] setup fake verificationToken - 'fake token'
-- [] check if email already in use (schema and controller)
-- [] send response with entire user (only while testing)
-- [] send back success message and token
+- [x] create user
+- [x] setup fake verificationToken - 'fake token' - for verification functionality later
+- [x] check if email already in use (schema and controller)
+- [x] send response with entire user (only while testing)
+- [x] send back success message and token
 
 #### Handle Password
 
-- [] UserSchema.pre('save') - hook
+- [x] UserSchema.pre('save') - hook
 - this points to User
 - bcrypt.genSalt - number of rounds
 - bcrypt.hash
 
 #### JWT
 
-- [] require 'jsonwebtoken' package
-- [] create jwt - jwt.sign(payload,secret,options)
-- [] verify jwt - jwt.verify(token,secret)
-- [] add variables in .env JWT_SECRET=jwtSecret and JWT_LIFETIME=1d
-- [] refactor code, create jwt functions in utils
-- [] refactor cookie code
-- [] setup func attachCookiesToResponse
-- [] accept payload(res, tokenUser)
-- [] create token, setup cookie
-- [] optionally send back the response
+- [x] require 'jsonwebtoken' package
+- [x] create jwt - jwt.sign(payload,secret,options)
+- [x] verify jwt - jwt.verify(token,secret)
+- [x] add variables in .env JWT_SECRET=jwtSecret and JWT_LIFETIME=1d
+- [x] refactor code, create jwt functions in utils
+- [x] refactor cookie code
+- [x] setup func attachCookiesToResponse
+- [x] accept payload(res, tokenUser)
+- [x] create token, setup cookie
 
 #### Login Route
 
