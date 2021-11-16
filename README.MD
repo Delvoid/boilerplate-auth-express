@@ -19,25 +19,26 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Setup Basic Express Server
 
-- [] import express and assign to variable
-- [] setup start port variable (5000) and start function
-  </br>
+- [x] import express and assign to variable
+- [x] setup start port variable (5000) and start function
+      </br>
 
 #### Connect To DB
 
-- [] get connection string
-- [] setup .env with MONGO_URI variable and assign the value
-- [] import 'dotenv' and setup package
-- [] import connectDB() and invoke in the starter
-  </br>
+- [x] get connection string
+- [x] setup .env with MONGO_URI variable and assign the value
+- [x] import 'dotenv' and setup package
+- [x] import connectDB() and invoke in the starter
+      </br>
 
 #### Basic Routes and Middleware
 
-- [] setup /test GET Route
-- [] setup express.json() middleware
-- [] setup 404 and errorHandler middleware
-- [] import 'exress-async-errors' package
-  </br>
+- [x] setup /test GET Route
+- [x] setup express.json() middleware
+- [x] setup errorHandler middleware
+- [x] setup 404 route not found middleware
+- [x] import 'exress-async-errors' package
+      </br>
 
 #### Morgan Pacakge
 
