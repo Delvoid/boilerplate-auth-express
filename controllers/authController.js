@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const UserModel = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
-const { attachCookiesToResponse, createTokenUser } = require('../utils')
+const { attachCookiesToResponse, createTokenUser, sendVerificationEmail } = require('../utils')
 
 const register = async (req, res) => {
   const { name, email, password } = req.body
@@ -14,11 +14,36 @@ const register = async (req, res) => {
   const verificationToken = crypto.randomBytes(40).toString('hex')
   const user = await UserModel.create({ name, email, password, verificationToken })
 
-  const tokenUser = createTokenUser(user)
-  attachCookiesToResponse({ res, user: tokenUser })
+  await sendVerificationEmail({
+    name: user.name,
+    email: user.email,
+    verificationToken: user.verificationToken,
+  })
 
-  res.status(StatusCodes.CREATED).json(user)
-  // res.status(StatusCodes.CREATED).json({msg: 'Success! Please check your email to verify account', token: user.verificationToken})
+  res.status(StatusCodes.CREATED).json({
+    msg: 'Success! Please check your email to verify account',
+    token: user.verificationToken,
+  })
+}
+
+const verifyEmail = async (req, res) => {
+  const { verificationToken, email } = req.body
+  if (!verificationToken || !email) throw new CustomError.BadRequest()
+
+  const user = await UserModel.findOne({ email })
+  if (!user) throw new CustomError.Unauthenticated('Verification Failed')
+
+  if (user.verificationToken !== verificationToken) {
+    throw new CustomError.Unauthenticated('Verification Failed')
+  }
+
+  user.isVerified = true
+  user.verified = Date.now()
+  user.verificationToken = ''
+
+  await user.save()
+
+  res.status(StatusCodes.OK).json({ msg: 'Email Verified', user })
 }
 
 const login = async (req, res) => {
@@ -49,6 +74,7 @@ const logout = async (req, res) => {
 
 module.exports = {
   register,
+  verifyEmail,
   login,
   logout,
 }

@@ -111,31 +111,31 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Verify Email Controller
 
-- [] create verifyEmail in authController
-- [] get verificationToken and email from req.body
-- [] setup a '/verify-email' route in authRoutes
-- [] check for user using email
-- [] if no user 401
-- [] if token does not match user token 401
-- [] if correct set
-- [] user.isVerified = true
-- [] user.verified = Date.now()
-- [] user.verificationToken = ''
-- [] save use with instance method
-- [] return msg:'email verified'
+- [x] create verifyEmail in authController
+- [x] get verificationToken and email from req.body
+- [x] setup a '/verify-email' route in authRoutes
+- [x] check for user using email
+- [x] if no user 401
+- [x] if token does not match user token 401
+- [x] if correct set
+- [x] user.isVerified = true
+- [x] user.verified = Date.now()
+- [x] user.verificationToken = ''
+- [x] save use with instance method
+- [x] return msg:'email verified'
 
 #### Email Setup
 
-- [] ethereal credentials (create account/login)
-- [] install nodemailer
-- [] create (nodemailerConfig, sendEmail,
-  sendResetPasswordEmail, sendVerficationEmail) files in utils
+- [x] ethereal credentials (create account/login)
+- [x] install nodemailer
+- [x] create (nodemailerConfig, sendEmail,
+      sendResetPasswordEmail, sendVerificationEmail) files in utils
 
 #### Send Verification Link
 
-- [] refactor sendEmail
-- [] setup sendVerificationEmail.js
-- [] pass arguments
+- [x] refactor sendEmail
+- [x] setup sendVerificationEmail.js
+- [x] pass arguments
 
 #### Refresh Token Model
 
