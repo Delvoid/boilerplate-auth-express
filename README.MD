@@ -151,17 +151,17 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] create empty refreshToken
 - [x] check for existing token
 - [x] if existing token
-- - [x] check token is valid, if not 401
-- - [x] refreshToken = existingToken
-- - [x] attachCookiesToResponse
-- - [x] return status ok with tokenUser
+  - [x] check token is valid, if not 401
+  - [x] refreshToken = existingToken
+  - [x] attachCookiesToResponse
+  - [x] return status ok with tokenUser
 - [x] create new refreshToken
 - [x] get user-agent
 - [x] create userToken
-- - [x] ip
-- - [x] refreshToken
-- - [x] userAgent
-- - [x] user id
+  - [x] ip
+  - [x] refreshToken
+  - [x] userAgent
+  - [x] user id
 - [x] attachCookiesToResponse
 - [x] return response ok with userToken
 
@@ -173,9 +173,13 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Create Auth Middleware - Access , Refresh Token
 
+- [x] create auth middleware
+  - [x] create authenticateUser and authorizePermissions
+- [x]add dashboard route to test auth middleware
+
 #### Refactor Logout
 
-- [] remove cookies when logging out
+- [x] remove cookies when logging out
 
 #### Forgot/Reset Password Functionality
 

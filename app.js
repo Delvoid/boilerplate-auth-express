@@ -21,7 +21,7 @@ const authRoutes = require('./routes/authRoutes')
 // TODO::users
 
 //middleware
-// TODO::authMiddleware
+const { authenticateUser } = require('./middleware/auth')
 const notFoundMiddleware = require('./middleware/notFound')
 const errorHandlerMiddleware = require('./middleware/errorHandler')
 
@@ -35,6 +35,10 @@ app.use(cookieParser(process.env.JWT_SECRET))
 
 app.use('/test', (req, res) => {
   res.send('Test route')
+})
+
+app.use('/api/v1/dashboard', authenticateUser, (req, res) => {
+  res.send('Dashboard')
 })
 
 app.use('/api/v1/auth', authRoutes)
