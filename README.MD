@@ -183,21 +183,40 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Forgot/Reset Password Functionality
 
-- User Model
-- passwordToken {type:String}
-- passwordTokenExpirationDate {type:Date}
-- authController
-- forgotPassword and resetPassword
-- authRoutes
-- post '/forgot-password' 'reset-password'
+- [x] Update User Model
+  - [x] passwordToken {type:String}
+  - [x] passwordTokenExpirationDate {type:Date}
+- [x] Update authController
+  - [x] forgotPassword and resetPassword
+- [x] Update authRoutes
+  - [x] post '/forgot-password' '/reset-password'
 
 #### Forgot Password Controller
 
-#### Send Reset Password Email
+- [x] check valid email
+- [x] find user
+- [x] if valid user
+  - [x] generate a passwordToken
+  - [x] send password reset email
+  - [x] set passwordTokenExpirationDate
+  - [x] has password token
+  - [x] save to user
+- [x] send ok status with msg
 
 #### Reset Password Controller
 
-#### Hash Password Token
+- [x] check for token, email and password, if not 404
+- [x] find user by email
+- [x] if user
+  - [x] check if token has expired
+  - [x] get current date
+  - [x] If check password token matches &&
+  - [x] If check token has not expired
+    - [x] update users password
+    - [x] set password token to null
+    - [x] set passwordTokenExpirationDate to null
+    - [x] save user
+- [x] return response password reset
 
 #### User Routes Structure
 

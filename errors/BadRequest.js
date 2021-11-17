@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes')
 
-module.exports = function NotFoundException(message) {
-  this.status = StatusCodes.BAD_REQUEST
-  this.message = message || 'Bad request'
+module.exports = function BadRequestException(message) {
+  this.status = StatusCodes.NOT_FOUND
+  this.message = message || 'Not found'
 }
