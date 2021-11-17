@@ -3,6 +3,7 @@ const UserModel = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { attachCookiesToResponse, createTokenUser, sendVerificationEmail } = require('../utils')
+const TokenModel = require('../models/Token')
 
 const register = async (req, res) => {
   const { name, email, password } = req.body
@@ -58,8 +59,31 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) throw new CustomError.Unauthenticated('Invalid credentials')
 
   const tokenUser = createTokenUser(user)
-  attachCookiesToResponse({ res, user: tokenUser })
+  // create refresh token
+  let refreshToken = ''
+  // check for existing token
+  const existingToken = await TokenModel.findOne({ user: user._id })
+  if (existingToken) {
+    const { isValid } = existingToken
+    if (!isValid) throw new CustomError.Unauthenticated('Invalid Credentials')
+    refreshToken = existingToken.refreshToken
+    attachCookiesToResponse({ res, user: tokenUser, refreshToken })
+    return res.status(StatusCodes.OK).json({ user: tokenUser })
+  }
 
+  refreshToken = crypto.randomBytes(40).toString('hex')
+  const userAgent = req.headers['user-agent']
+  const ip = req.ip
+  const userToken = {
+    refreshToken,
+    ip,
+    userAgent,
+    user: user._id,
+  }
+
+  await TokenModel.create(userToken)
+
+  attachCookiesToResponse({ res, user: tokenUser, refreshToken })
   res.status(StatusCodes.OK).json({ user: tokenUser })
   // res.status(StatusCodes.OK).json({ msg: 'done' })
 }

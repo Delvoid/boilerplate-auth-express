@@ -133,29 +133,45 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Send Verification Link
 
-- [x] refactor sendEmail
+- [x] setup sendEmail
 - [x] setup sendVerificationEmail.js
 - [x] pass arguments
 
 #### Refresh Token Model
 
-- [] create Token.js in models
-- [] refreshToken,ip,userAgent - all String and required
-- [] isValid - Boolean, default:true
-- [] ref user
-- [] timestamps true
+- [x] create Token.js in models
+- [x] refreshToken,ip,userAgent - all String and required
+- [x] isValid - Boolean, default:true
+- [x] ref user
+- [x] timestamps true
+- [x] attempts Number: default: 0
 
 #### Setup Refresh Token in Login Controller
+
+- [x] create empty refreshToken
+- [x] check for existing token
+- [x] if existing token
+- - [x] check token is valid, if not 401
+- - [x] refreshToken = existingToken
+- - [x] attachCookiesToResponse
+- - [x] return status ok with tokenUser
+- [x] create new refreshToken
+- [x] get user-agent
+- [x] create userToken
+- - [x] ip
+- - [x] refreshToken
+- - [x] userAgent
+- - [x] user id
+- [x] attachCookiesToResponse
+- [x] return response ok with userToken
 
 #### Send Multiple Cookies
 
 - attachCookiesToResponse utils- jwt
-- [] accessTokenJWT
-- [] refreshTokenJWT
+- [x] accessTokenJWT
+- [x] refreshTokenJWT
 
-#### Check for Existing Token
-
-#### Refactor Auth Middleware - Access , Refresh Token
+#### Create Auth Middleware - Access , Refresh Token
 
 #### Refactor Logout
 
@@ -227,6 +243,8 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [] if one is missing, send 400 (optional)
 - [] use user.save() to trigger the UserSchema.pre('save') - hook
 - [] create token user, attachCookiesToResponse and send back the tokenUser
+
+#### show User tokens?
 
 #### Setup and Apply checkPermissions()
 
