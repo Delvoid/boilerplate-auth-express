@@ -97,10 +97,10 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Login Route
 
-- [] check if email and password exist, if one missing return 400
-- [] find user, if no user return 401
-- [] check password, if does not match return 401
-- [] check if user.isVerified, if not 401
+- [x] check if email and password exist, if one missing return 400
+- [x] find user, if no user return 401
+- [x] check password, if does not match return 401
+- [] check if user.isVerified, if not 401 -TODO
 - [] if everything is correct, attach cookie
   and send back the same response as in register
 

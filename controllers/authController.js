@@ -21,8 +21,22 @@ const register = async (req, res) => {
   // res.status(StatusCodes.CREATED).json({msg: 'Success! Please check your email to verify account', token: user.verificationToken})
 }
 
-const login = (req, res) => {
-  res.send('login route')
+const login = async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) throw new CustomError.BadRequest('Please provide email and password')
+  // find user
+  const user = await UserModel.findOne({ email })
+  if (!user) throw new CustomError.Unauthenticated('Invalid credentials')
+  // verify password
+  const isPasswordCorrect = await user.comparePassword(password)
+  if (!isPasswordCorrect) throw new CustomError.Unauthenticated('Invalid credentials')
+
+  const tokenUser = createTokenUser(user)
+  attachCookiesToResponse({ res, user: tokenUser })
+
+  res.status(StatusCodes.OK).json({ user: tokenUser })
+  // res.status(StatusCodes.OK).json({ msg: 'done' })
 }
 
 const logout = (req, res) => {
