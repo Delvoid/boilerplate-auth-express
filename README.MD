@@ -100,7 +100,7 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] check if email and password exist, if one missing return 400
 - [x] find user, if no user return 401
 - [x] check password, if does not match return 401
-- [] check if user.isVerified, if not 401 -TODO
+- [x] check if user.isVerified, if not 401
 - [x] if everything is correct, attach cookie
       and send back the same response as in register
 
