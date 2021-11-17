@@ -220,20 +220,20 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### User Routes Structure
 
-- [] add userController file
-- [] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions
-- [] res.send('some string value')
-- [] setup userRoutes file
-- [] import all controllers
-- [] setup just one route - router.route('/').get(getAllUsers);
-- [] import userRoutes as userRouter in the app.js
-- [] setup app.use('/api/v1/users', userRouter)
+- [x] add userController file
+- [x] export (getAllUsers,getUserById,showCurrentUser,updateUser,updateUserPassword) functions
+- [x] res.send('some string value')
+- [x] setup userRoutes file
+- [x] import all controllers
+- [x] import userRoutes as userRouter in the app.js
+- [x] setup app.use('/api/v1/users', userRouter)
 
 #### GetAllUsers and GetSingleUser
 
-- [] Get all users where role is 'user' and remove password
-- [] Get Single User where id matches id param and remove password
-- [] If no user 404
+- [x] Get all users and remove password
+- [x] Get Single User where id matches id param and remove password
+  - [x] throw error if invalid id
+  - [x] If no user 404
 
 #### ShowCurrentUser
 
@@ -270,6 +270,12 @@ Goal is to create a boilerplate project for users authentication. With the follo
 #### show User tokens?
 
 #### Setup and Apply checkPermissions()
+
+- [] first user created is a admin
+- [x] create checkPermissions in ultis
+- [x] create authorizePermissions middleware
+- [] only admin can get all users list
+- [] users can cannot get other users by ID unless they are admin
 
 ### TESTS
 

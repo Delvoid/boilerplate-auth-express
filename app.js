@@ -18,7 +18,7 @@ const connectDB = require('./db/connect')
 
 // routes
 const authRoutes = require('./routes/authRoutes')
-// TODO::users
+const userRoutes = require('./routes/userRoutes')
 
 //middleware
 const { authenticateUser } = require('./middleware/auth')
@@ -42,6 +42,7 @@ app.use('/api/v1/dashboard', authenticateUser, (req, res) => {
 })
 
 app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/users', userRoutes)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
