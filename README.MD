@@ -101,13 +101,13 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] find user, if no user return 401
 - [x] check password, if does not match return 401
 - [] check if user.isVerified, if not 401 -TODO
-- [] if everything is correct, attach cookie
-  and send back the same response as in register
+- [x] if everything is correct, attach cookie
+      and send back the same response as in register
 
 #### Logout Route
 
-- [] set token cookie equal to some string value
-- [] set expires:new Date(Date.now())
+- [x] set token cookie equal to some string value
+- [x] set expires:new Date(Date.now())
 
 #### Verify Email Controller
 
