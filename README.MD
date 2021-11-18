@@ -282,8 +282,8 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] first user created is a admin
 - [x] create checkPermissions in ultis
 - [x] create authorizePermissions middleware
-- [] only admin can get all users list
-- [] users can cannot get other users by ID unless they are admin
+- [x] only admin can get all users list
+- [x] users can cannot get other users by ID unless they are admin
 
 ### TESTS
 

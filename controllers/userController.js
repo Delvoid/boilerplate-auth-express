@@ -16,6 +16,8 @@ const getUserById = async (req, res) => {
   if (!ObjectId.isValid(id)) throw new CustomError.NotFound(`No user with id: ${id}`)
   const user = await UserModel.findById(id).select('-password')
   if (!user) throw new CustomError.NotFound(`No user with id: ${id}`)
+  checkPermissions(req.user, user._id)
+
   res.status(StatusCodes.OK).json({ user })
 }
 const showCurrentUser = (req, res) => {
