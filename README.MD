@@ -237,37 +237,45 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### ShowCurrentUser
 
-- [] get user from req
-- [] send response with user
+- [x] get user from req
+- [x] send response with user
 
 #### UpdateUserPassword
 
-- [] almost identical to login user
-- [] add authenticateUser middleware in the route
-- [] check for oldPassword and newPassword in the body
-- [] if one missing 400
-- [] look for user with req.user.userId
-- [] check if oldPassword matches with user.comparePassword
-- [] if no match 401
-- [] if everything good set user.password equal to newPassword
-- [] await user.save()
+- [x] almost identical to login user
+- [x] add authenticateUser middleware in the route
+- [x] check for oldPassword and newPassword in the body
+- [x] if one missing 400
+- [x] look for user with req.user.userId
+- [x] check if oldPassword matches with user.comparePassword
+- [x] if no match 401
+- [x] if everything good set user.password equal to newPassword
+- [x] await user.save()
 
 #### createTokenUser in Utils
 
-- [] create a file in utils (createTokenUser)
-- [] setup a function that accepts user object and returns userToken object
-- [] export as default
-- [] setup all the correct imports/exports
+- [x] create a file in utils (createTokenUser)
+- [x] setup a function that accepts user object and returns userToken object
+- [x] export as default
+- [x] setup all the correct imports/exports
 
 #### updateUser with user.save()
 
-- [] add authenticateUser middleware in the route
-- [] check for name and email in the body
-- [] if one is missing, send 400 (optional)
-- [] use user.save() to trigger the UserSchema.pre('save') - hook
-- [] create token user, attachCookiesToResponse and send back the tokenUser
+- [x] add authenticateUser middleware in the route
+- [x] check for name and email in the body
+- [x] if one is missing, send 400 (optional)
+- [x] use user.save() to trigger the UserSchema.pre('save') - hook
+- [x] create token user, attachCookiesToResponse and send back the tokenUser
 
-#### show User tokens?
+#### get logged in user tokens
+
+- [x] create GetUserTokens
+- [x] if no id passed get logged in users tokens
+- [x] if id is passed find the tokens for that users id
+
+#### revoke all tokens -- TODO
+
+#### revoke a single device token -- TODO
 
 #### Setup and Apply checkPermissions()
 
