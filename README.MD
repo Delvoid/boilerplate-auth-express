@@ -14,6 +14,8 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - Get single user
 - Show current user
 - Change password
+- Update user
+- Get user tokens
   </br>
   </br>
 
