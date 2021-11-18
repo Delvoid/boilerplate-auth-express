@@ -279,7 +279,7 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Setup and Apply checkPermissions()
 
-- [] first user created is a admin
+- [x] first user created is a admin
 - [x] create checkPermissions in ultis
 - [x] create authorizePermissions middleware
 - [] only admin can get all users list

@@ -18,8 +18,12 @@ const register = async (req, res) => {
   const emailAlreadyExists = await UserModel.findOne({ email })
   if (emailAlreadyExists) throw new CustomError.BadRequest('Email already exists')
 
+  // first registered user is an admin
+  const isFirstAccount = (await UserModel.countDocuments({})) === 0
+  const role = isFirstAccount ? 'admin' : 'user'
+
   const verificationToken = crypto.randomBytes(40).toString('hex')
-  const user = await UserModel.create({ name, email, password, verificationToken })
+  const user = await UserModel.create({ name, email, password, role, verificationToken })
 
   await sendVerificationEmail({
     name: user.name,
@@ -29,7 +33,6 @@ const register = async (req, res) => {
 
   res.status(StatusCodes.CREATED).json({
     msg: 'Success! Please check your email to verify account',
-    token: user.verificationToken,
   })
 }
 
