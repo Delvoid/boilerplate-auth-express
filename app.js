@@ -13,9 +13,6 @@ const helmet = require('helmet')
 const xss = require('xss-clean')
 const cors = require('cors')
 
-// database
-const connectDB = require('./db/connect')
-
 // routes
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
@@ -47,15 +44,4 @@ app.use('/api/v1/users', userRoutes)
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
-const port = process.env.PORT || 5000
-const start = async () => {
-  try {
-    //conect to db
-    await connectDB(process.env.MONGO_URI)
-    app.listen(port, () => console.log(`Server is listening on port ${port}...`))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-start()
+module.exports = app

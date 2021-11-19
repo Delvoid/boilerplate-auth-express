@@ -3,6 +3,7 @@ const BadRequest = require('./BadRequest')
 const Unauthorized = require('./Unauthorized')
 const Unauthenticated = require('./Unauthenticated')
 const Expired = require('./Expired')
+const BadGateway = require('./BadGateway')
 
 module.exports = {
   NotFound,
@@ -10,4 +11,5 @@ module.exports = {
   Unauthorized,
   Unauthenticated,
   Expired,
+  BadGateway,
 }

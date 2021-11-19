@@ -7,6 +7,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     Object.entries(errors).forEach(([key, value]) => {
       validationErrors[key] = value.properties.message
     })
+    err.status = 400
   }
   let customError = {
     // set default

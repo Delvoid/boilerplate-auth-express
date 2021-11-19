@@ -289,9 +289,43 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 ### TESTS
 
-#### TODO
+#### setup
+
+- [x] install supertest
+- [x] install smtp-server
+- [x] create tests folder
+- [x] refacter app.js for supertest
+- [x] create package script test
+
+#### Register User
+
+- [x] beforeAll connect to DB
+- [x] afterAll disconnect from DB
+- [x] afterEach delete users
+- [x] returns 200 on valid requests
+- [x] returns Success! Please check your email to verify account on valid requests
+- [x] returns badRequest is email already in use with message
+- [x] returns 400 if name email missing
+- [x] returns 400 if name name missing
+- [x] returns 400 if name password missing
+- [x] returns validationErrors field in response body when validation error occurs
+- [x] returns error for when name, password and email are null
+- [x] creates user unverified
+- [x] creates an activation token for user
+- [x] password is hashed
+- [x]Password must have at least 1 uppercase, 1 lowercase letter and 1 number
+- [x] email sent with verificationToken
+- [x] returns 502 when sending email fails
+- [] does not save user to dabase if activation email fails
+- [] first user is created as admin
+
+#### Verify Email
 
 ## Docs, secruity and deploy
+
+#### logging
+
+- [] should i add?
 
 #### Create Docs
 
@@ -302,7 +336,7 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Security Packages
 
-- [] express-rate-limiter
+- [] express-rate-limiter - needed?
 - [] helmet
 - [] xss-clean
 - [] express-mongo-sanitize
@@ -311,13 +345,11 @@ Goal is to create a boilerplate project for users authentication. With the follo
 #### Deploy on Heroku
 
 - [] heroku account and heroku cli
-- [] remove/copy from the main repo
 - [] add dev command "nodemon app.js"
 - [] change start to "node app.js"
 - [] setup node version in package.json
 - [] "engines": {"node": "16.x"}
 - [] Procfile "web: node app.js"
-- [] remove existing git repo
 - [] git commit latest changes
 - [] heroku login
 - [] heroku create "App Name"

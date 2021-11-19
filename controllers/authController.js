@@ -25,11 +25,16 @@ const register = async (req, res) => {
   const verificationToken = crypto.randomBytes(40).toString('hex')
   const user = await UserModel.create({ name, email, password, role, verificationToken })
 
-  await sendVerificationEmail({
-    name: user.name,
-    email: user.email,
-    verificationToken: user.verificationToken,
-  })
+  try {
+    await sendVerificationEmail({
+      name: user.name,
+      email: user.email,
+      verificationToken: user.verificationToken,
+    })
+  } catch (error) {
+    await UserModel.findByIdAndDelete(user._id)
+    throw new CustomError.BadGateway('Invalid mailbox')
+  }
 
   res.status(StatusCodes.CREATED).json({
     msg: 'Success! Please check your email to verify account',

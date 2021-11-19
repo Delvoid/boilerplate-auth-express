@@ -7,8 +7,9 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Please provide name'],
-      minlenght: 3,
-      maxlength: 50,
+      minlength: [3, 'Minimun username length is 2 characters'],
+      maxlength: [50, 'Maximun username length is 50 characters'],
+      trim: true,
     },
     email: {
       type: String,
@@ -21,8 +22,12 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please provide password'],
-      minlength: 6,
+      required: [true, 'Password must have at least 1 uppercase, 1 lowercase letter and 1 number'],
+      minlength: [8, 'Minimun password length is 8 characters'],
+      validate: {
+        validator: validator.isStrongPassword,
+        message: 'Password must have at least 1 uppercase, 1 lowercase letter and 1 number',
+      },
     },
     role: {
       type: String,
