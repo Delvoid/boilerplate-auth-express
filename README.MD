@@ -426,10 +426,26 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x]Password must have at least 1 uppercase, 1 lowercase letter and 1 number
 - [x] email sent with verificationToken
 - [x] returns 502 when sending email fails
-- [] does not save user to dabase if activation email fails
-- [] first user is created as admin
+- [x] does not save user to dabase if activation email fails
+- [x] first user is created has a role of admin
+- [x] second user is created has a role of user
 
 #### Verify Email
+
+- [x] verifies the email when correct token is sent
+- [x] removes the token from user table after successful verification
+- [x] sets the verified date after successful verification
+- [x] returns msg with Email verified on successful verification and 200 status
+- [x] does not verify email with incorrect token and returns 401
+- [x] returns unauthorised request when token is wrong
+- [x] returns unauthorised request when email is wrong
+
+#### Error Model
+
+- [x] returns path, timestamp, message and validationErrors in response when validation failure
+- [x] returns path, timestamp and message in response when request fails other than validation error
+- [x] returns path in error body
+- [x] returns timestamp in milliseconds within 5 seconds value in error body
 
 ## Docs, secruity and deploy
 

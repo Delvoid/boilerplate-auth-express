@@ -42,7 +42,9 @@ afterAll(async () => {
   jest.setTimeout(5000)
 })
 beforeEach(async () => {
+  simulateSmtpFailure = false
   await dbConnection.collection('users').deleteMany({})
+  jest.setTimeout(5000)
 })
 
 const registerUser = (user = validUser) => {
@@ -204,5 +206,91 @@ describe('User Registration', () => {
       const users = await UserModel.find({})
       expect(users.length).toBe(0)
     })
+    it('returns the first user created with a role of admin', async () => {
+      await registerUser()
+      const user = await UserModel.findOne({})
+      expect(user.role).toBe('admin')
+    })
+    it('returns the second user created with a role of user', async () => {
+      await registerUser()
+      await registerUser({ name: 'Normal', email: 'test@gmail.com', password: 'Test321.' })
+      const user = await UserModel.findOne({ name: 'Normal' })
+
+      expect(user.role).toBe('user')
+    })
+  })
+})
+
+describe('Verify email', () => {
+  it('verifies the email when correct token is sent', async () => {
+    const test = await registerUser()
+    let user = await UserModel.findOne({})
+
+    const { email, verificationToken } = user
+    await request(app).post(`/api/v1/auth/verify-email`).send({ verificationToken, email })
+
+    user = await UserModel.findOne({})
+    expect(user.isVerified).toEqual(true)
+  })
+
+  it('removes the token from user table after successful verification', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+    const { email, verificationToken } = user
+    await request(app).post(`/api/v1/auth/verify-email`).send({ verificationToken, email })
+
+    user = await UserModel.findOne({})
+    expect(user.verificationToken).toBe('')
+  })
+  it('sets the verified date after successful verification', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+    const { email, verificationToken } = user
+    await request(app).post(`/api/v1/auth/verify-email`).send({ verificationToken, email })
+
+    user = await UserModel.findOne({})
+    expect(user.verified).toEqual(expect.any(Date))
+  })
+  it('returns msg with Email verified on successful verification and 200 status', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+
+    const { email, verificationToken } = user
+    const res = await request(app)
+      .post(`/api/v1/auth/verify-email`)
+      .send({ verificationToken, email })
+
+    expect(res.body.msg).toBe('Email Verified')
+    expect(res.status).toBe(200)
+  })
+  it('does not verify email with incorrect token and returns 401', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+    const { email, verificationToken } = user
+    await request(app)
+      .post(`/api/v1/auth/verify-email`)
+      .send({ verificationToken: 'this-is-a-fake-token', email })
+
+    user = await UserModel.findOne({})
+    expect(user.isVerified).toEqual(false)
+    expect(user.verificationToken).toEqual(expect.any(String))
+  })
+  it('returns unauthorised request when token is wrong', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+    const { email, verificationToken } = user
+    const res = await request(app)
+      .post(`/api/v1/auth/verify-email`)
+      .send({ verificationToken: 'this-is-a-fake-token', email })
+    expect(res.status).toBe(401)
+  })
+  it('returns unauthorised request when email is wrong', async () => {
+    await registerUser()
+    let user = await UserModel.findOne({})
+    const { email, verificationToken } = user
+    const res = await request(app)
+      .post(`/api/v1/auth/verify-email`)
+      .send({ verificationToken: verificationToken, email: 'fakeemail@mail.com' })
+    expect(res.status).toBe(401)
   })
 })

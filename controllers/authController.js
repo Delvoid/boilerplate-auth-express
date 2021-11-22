@@ -58,7 +58,7 @@ const verifyEmail = async (req, res) => {
 
   await user.save()
 
-  res.status(StatusCodes.OK).json({ msg: 'Email Verified', user })
+  res.status(StatusCodes.OK).json({ msg: 'Email Verified' })
 }
 
 const login = async (req, res) => {
