@@ -463,9 +463,9 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Logout
 
-- [] returns 200 ok when unathorized request send for logout
-- [] removes tokens from database
-- [] removes stored cookies
+- [x] returns 401 ok when unathorized request send for logout
+- [x] removes tokens from database
+- [x] removes stored cookies
 
 #### Token expiration
 
