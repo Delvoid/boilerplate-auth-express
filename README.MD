@@ -447,11 +447,90 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] returns path in error body
 - [x] returns timestamp in milliseconds within 5 seconds value in error body
 
+#### Login
+
+- [] returns 200 when credentials are correct
+- [] returns tokenUser: name, userId, role when login success
+- [] attach cookie if login is successful
+- [] returns 401 if user not exist
+- [] returns correct error body when auth fails
+- [] returns 401 when password does not match
+- [] returns 401 when e-mail is not valid
+- [] returns 401 when password is not valid
+- [] returns 403 when logging in with an unverified account
+
+#### Logout
+
+- [] returns 200 ok when unathorized request send for logout
+- [] removes tokens from database
+- [] removes stored cookies
+
+#### Token expiration
+
+- [] returns 403 when refresh token is 30days old
+- [] refreshes token if expiered and refresh token is valid
+
+#### Forgot password
+
+- [] return 200 with msg
+- [] creates password reset token on valid email and user
+- [] return 400 if invalid email
+- [] sends email if valid user is found
+- [] returns 502 when bad gateway when sending email fails
+
+#### Reset password
+
+- [] returns 403 when password update request does not have the valid password reset token
+- [] returns 403 when password update request with invalid password pattern and reset token is invalid
+- [] returns 400 when trying to update with invalid password and the reset token is valid
+- [] returns 200 when valid password is sent with valid reset token
+- [] updates the password in database when the request is valid
+- [] clears the reset token in database when the request is valid
+- [] verifys email if unverified after valid password reset
+- [] clears all tokens of user after valid password reset
+
+#### Get users
+
+- [] returns 401 if not authorised
+- [] returns 200 ok when there are no users in database with valid auth and role admin
+- [] returns users with valid auth and role admin
+
+#### Get single user
+
+- [] returns 404 when user is not found
+- [] returns correct error body when user not found
+- [] returns 200 on valid user
+
+#### Get current user
+
+- [] returns 401 if not authorised
+- [] returns 200 and logged in user object without password if authorised
+- [] returns 404 if not found
+- [] returns 401 if a user tries to get another users other than themself
+- [] returns 200 if a admin tries to get another user other than themself
+
+#### Update password
+
+- [] returns 200 with msg on valid request
+- [] returns 400 if oldPassword is missing
+- [] returns 400 if newPassword is missing
+- [] returns 401 if passwords do not match
+- [] returns 400 if password is not pass validation
+- [] updates the password in database when the request is valid
+
+#### Get user tokens
+
+- [] returns 200 if valid auth
+- [] returns logged in users tokens if no id is passed
+- [] returns 400 if invalid id
+- [] returns 401 if a user tries to get another users tokens
+- [] returns 200 if a admin tries to get other users tokens
+
 ## Docs, secruity and deploy
 
 #### logging
 
-- [] should i add?
+- [] should i add? - think about it
 
 #### Create Docs
 

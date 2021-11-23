@@ -20,9 +20,11 @@ const getUserById = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ user })
 }
+
 const showCurrentUser = (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user })
 }
+
 const updateUser = async (req, res) => {
   const { name, email } = req.body
   if (!name || !email) throw new CustomError.BadRequest('Please provide all values')
@@ -61,6 +63,7 @@ const getUserTokens = async (req, res) => {
   const tokens = await TokenModel.find({
     user: id,
   })
+  checkPermissions(req.user, user._id)
   res.status(StatusCodes.OK).json({ tokens })
 }
 
