@@ -467,18 +467,14 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] removes tokens from database
 - [x] removes stored cookies
 
-#### Token expiration
-
-- [] returns 403 when refresh token is 30days old
-- [] refreshes token if expiered and refresh token is valid
-
 #### Forgot password
 
-- [] return 200 with msg
-- [] creates password reset token on valid email and user
-- [] return 400 if invalid email
-- [] sends email if valid user is found
-- [] returns 502 when bad gateway when sending email fails
+- [x] return 200 with msg
+- [x] creates password reset token on valid email and user
+- [x] creates passwordTokenExpirationDate on valid user
+- [x] return 400 if invalid email
+- [x] sends email if valid user is found
+- [x] returns 502 when bad gateway when sending email fails
 
 #### Reset password
 
@@ -527,6 +523,11 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [] returns 400 if invalid id
 - [] returns 401 if a user tries to get another users tokens
 - [] returns 200 if a admin tries to get other users tokens
+
+#### Token expiration
+
+- [] returns 403 when refresh token is 30days old
+- [] refreshes token if expiered and refresh token is valid
 
 ## Docs, secruity and deploy
 
