@@ -449,15 +449,17 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Login
 
-- [] returns 200 when credentials are correct
-- [] returns tokenUser: name, userId, role when login success
-- [] attach cookie if login is successful
-- [] returns 401 if user not exist
-- [] returns correct error body when auth fails
-- [] returns 401 when password does not match
-- [] returns 401 when e-mail is not valid
-- [] returns 401 when password is not valid
-- [] returns 403 when logging in with an unverified account
+- [x] returns 200 when credentials are correct
+- [x] returns tokenUser: name, userId, role when login success
+- [x] attach cookie if login is successful
+- [x] returns 401 if user not exist
+- [x] returns correct error body when auth fails
+- [x] returns 401 when password does not match
+- [x] returns 401 when e-mail is not valid
+- [x] returns 401 when password is not valid
+- [x] returns 400 when e-mail is missing
+- [x] returns 400 when password is missing
+- [x] returns 401 when logging in with an unverified account
 
 #### Logout
 

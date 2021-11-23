@@ -75,7 +75,6 @@ const login = async (req, res) => {
   if (!user.isVerified) {
     throw new CustomError.Unauthenticated('Please verify your email')
   }
-
   const tokenUser = createTokenUser(user)
   // create refresh token
   let refreshToken = ''
@@ -90,7 +89,7 @@ const login = async (req, res) => {
   }
 
   refreshToken = crypto.randomBytes(40).toString('hex')
-  const userAgent = req.headers['user-agent']
+  const userAgent = process.env.NODE_ENV === 'test' ? 'jest' : req.headers['user-agent']
   const ip = req.ip
   const userToken = {
     refreshToken,
