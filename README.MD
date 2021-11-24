@@ -487,9 +487,9 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Get users
 
-- [] returns 401 if not authorised
-- [] returns 200 ok when there are no users in database with valid auth and role admin
-- [] returns users with valid auth and role admin
+- [x] returns 403 if not authorised
+- [x] returns 200 when valid auth and role admin
+- [x] returns users list when valid auth and role admin
 
 #### Get single user
 
