@@ -21,8 +21,14 @@ const getUserById = async (req, res) => {
   res.status(StatusCodes.OK).json({ user })
 }
 
-const showCurrentUser = (req, res) => {
-  res.status(StatusCodes.OK).json({ user: req.user })
+const showCurrentUser = async (req, res) => {
+  const user = await UserModel.findById(req.user.userId).select({
+    password: 0,
+    verificationToken: 0,
+    passwordToken: 0,
+    __v: 0,
+  })
+  res.status(StatusCodes.OK).json({ user })
 }
 
 const updateUser = async (req, res) => {

@@ -493,17 +493,15 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Get single user
 
-- [] returns 404 when user is not found
-- [] returns correct error body when user not found
-- [] returns 200 on valid user
+- [x] returns 404 when user is not found
+- [x] returns correct error body when user not found
+- [x] returns 200 on valid user when admin
+- [x] returns 401 when basic user tries to get another user
 
 #### Get current user
 
 - [] returns 401 if not authorised
 - [] returns 200 and logged in user object without password if authorised
-- [] returns 404 if not found
-- [] returns 401 if a user tries to get another users other than themself
-- [] returns 200 if a admin tries to get another user other than themself
 
 #### Update password
 
