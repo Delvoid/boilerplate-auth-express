@@ -91,8 +91,6 @@ describe('Logout User', () => {
   describe('DELETE /api/v1/auth/logout', () => {
     it('returns 200 ok when unathorized user sends a logout request', async () => {
       const res = await request(app).delete('/api/v1/auth/logout')
-      console.log(res.body)
-
       expect(res.status).toBe(401)
       expect(res.body.msg).toBe('Authentication Invalid')
     })
