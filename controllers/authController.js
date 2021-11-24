@@ -155,8 +155,12 @@ const resetPassword = async (req, res) => {
     throw new CustomError.BadRequest('Please provide all values')
   }
   const user = await UserModel.findOne({ email })
+  if (!user) throw new CustomError.Unauthorized('Password link has expired, please try again')
   if (user) {
     const currentDate = new Date()
+    if (user.passwordToken !== createHash(passwordToken)) {
+      throw new CustomError.Unauthorized('Password link has expired, please try again')
+    }
     if (user.passwordTokenExpirationDate < currentDate)
       throw new CustomError.Expired('Password link has expired, please try again')
 
@@ -167,7 +171,11 @@ const resetPassword = async (req, res) => {
       user.password = password
       user.passwordToken = null
       user.passwordTokenExpirationDate = null
+      user.isVerified = true
+      user.verified = Date.now()
+      user.verificationToken = ''
       await user.save()
+      await TokenModel.deleteMany({ user: user._id })
     }
   }
   res.send('Password reset')

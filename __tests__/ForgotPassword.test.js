@@ -1,10 +1,13 @@
 const request = require('supertest')
 const SMTPServer = require('smtp-server').SMTPServer
+const crypto = require('crypto')
+const bcrypt = require('bcryptjs')
 const app = require('../app')
 const connectDb = require('../db/connect')
 const UserModel = require('../models/User')
 const nodemailerConfig = require('../utils/nodemailerConfig')
 const TokenModel = require('../models/Token')
+const { createHash } = require('../utils')
 
 let dbConnection
 let lastMail, server
@@ -59,13 +62,13 @@ const loginUser = (user = validUser) => {
   return agent.send({ email: user.email, password: user.password })
 }
 
-const getFirstUser = async () => {
-  const user = await UserModel.findOne({})
+const fineUser = async (name = validUser.name) => {
+  const user = await UserModel.findOne({ name })
   return user
 }
 
-const verifyUser = async () => {
-  const user = await getFirstUser()
+const verifyUser = async (name = validUser.name) => {
+  const user = await fineUser(name)
   const agent = request(app).post('/api/v1/auth/verify-email')
   return await agent.send({ verificationToken: user.verificationToken, email: user.email })
 }
@@ -73,7 +76,7 @@ const verifyUser = async () => {
 const createUser = async () => {
   await registerUser()
   await verifyUser()
-  const user = await getFirstUser()
+  const user = await fineUser()
   return user
 }
 
@@ -130,12 +133,136 @@ describe('Forgot Password', () => {
       expect(lastMail).toContain('token')
       expect(lastMail).toContain('Please reset password')
     })
-    it.only('returns 502 Bad Gateway when sending email fails', async () => {
+    it('returns 502 Bad Gateway when sending email fails', async () => {
       await createUser()
       simulateSmtpFailure = true
       const res = await forgotPassword()
 
       expect(res.status).toBe(502)
+    })
+  })
+})
+
+describe('Reset password', () => {
+  describe('Post /api/v1/auth/reset-password', () => {
+    it('retuns 403 when invalid password reset token', async () => {
+      await createUser()
+      await forgotPassword()
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: 'incorrectToken',
+        email: validUser.email,
+        password: 'NewPassword321.',
+      })
+
+      expect(res.status).toBe(403)
+    })
+    it('returns 400 when invalid password and valid token', async () => {
+      await createUser()
+      await forgotPassword()
+      const passwordToken = crypto.randomBytes(70).toString('hex')
+      let user = await UserModel.findOne({})
+      user.passwordToken = createHash(passwordToken)
+      user.save()
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: passwordToken,
+        email: user.email,
+        password: 'wrong',
+      })
+
+      expect(res.status).toBe(400)
+    })
+    it('returns 200 when valid password and reset token', async () => {
+      await createUser()
+      await forgotPassword()
+      const passwordToken = crypto.randomBytes(70).toString('hex')
+      let user = await UserModel.findOne({})
+      user.passwordToken = createHash(passwordToken)
+      user.save()
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: passwordToken,
+        email: user.email,
+        password: 'ValidPassword321.',
+      })
+
+      expect(res.status).toBe(200)
+    })
+    it('updates password in database and resets passwordToken', async () => {
+      await createUser()
+      await forgotPassword()
+      const passwordToken = crypto.randomBytes(70).toString('hex')
+      let user = await UserModel.findOne({})
+      user.passwordToken = createHash(passwordToken)
+      user.save()
+      const newPassword = 'ValidPassword321.'
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: passwordToken,
+        email: user.email,
+        password: newPassword,
+      })
+      user = await UserModel.findOne({})
+      const isMatch = await bcrypt.compare(newPassword, user.password)
+
+      expect(res.status).toBe(200)
+      expect(user.passwordToken).toBeNull()
+      expect(user.passwordTokenExpirationDate).toBeNull()
+      expect(isMatch).toBeTruthy()
+    })
+    it('clears the token in database when valid request', async () => {
+      await createUser()
+      await loginUser()
+      const validSecondUser = {
+        name: 'test2',
+        email: 'test2@test.com',
+        password: validUser.password,
+      }
+      await registerUser(validSecondUser)
+      await verifyUser(validSecondUser.name)
+      await loginUser(validSecondUser)
+
+      const token = await TokenModel.find({})
+      expect(token.length).toBe(2)
+
+      await forgotPassword()
+      const passwordToken = crypto.randomBytes(70).toString('hex')
+      let user = await UserModel.findOne({})
+      user.passwordToken = createHash(passwordToken)
+      user.save()
+      const newPassword = 'ValidPassword321.'
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: passwordToken,
+        email: user.email,
+        password: newPassword,
+      })
+
+      const removedToken = await TokenModel.find({})
+      expect(res.status).toBe(200)
+      expect(removedToken.length).toBe(1)
+    })
+
+    it('verifys email if unverified after valid password reset', async () => {
+      await registerUser()
+      await forgotPassword()
+      const passwordToken = crypto.randomBytes(70).toString('hex')
+      let user = await UserModel.findOne({})
+      user.passwordToken = createHash(passwordToken)
+      user.save()
+
+      expect(user.isVerified).not.toBeTruthy()
+
+      const res = await request(app).post('/api/v1/auth/reset-password').send({
+        passwordToken: passwordToken,
+        email: user.email,
+        password: 'ValidPassword321.',
+      })
+
+      expect(res.status).toBe(200)
+      user = await UserModel.findOne({})
+      expect(user.isVerified).toBeTruthy()
     })
   })
 })

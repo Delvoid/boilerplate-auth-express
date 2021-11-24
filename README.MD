@@ -478,14 +478,12 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Reset password
 
-- [] returns 403 when password update request does not have the valid password reset token
-- [] returns 403 when password update request with invalid password pattern and reset token is invalid
-- [] returns 400 when trying to update with invalid password and the reset token is valid
-- [] returns 200 when valid password is sent with valid reset token
-- [] updates the password in database when the request is valid
-- [] clears the reset token in database when the request is valid
-- [] verifys email if unverified after valid password reset
-- [] clears all tokens of user after valid password reset
+- [x] returns 403 when password update request does not have the valid password reset token
+- [x] returns 400 when trying to update with invalid password and the reset token is valid
+- [x] returns 200 when valid password is sent with valid reset token
+- [x] updates the password in database when the request is valid
+- [x] clears the reset token in database when the request is valid
+- [x] verifys email if unverified after valid password reset
 
 #### Get users
 
