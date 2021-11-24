@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --watchAll"
+    "test": "cross-env NODE_ENV=test jest --runInBand --watchAll"
   },
   "keywords": [],
   "author": "",
