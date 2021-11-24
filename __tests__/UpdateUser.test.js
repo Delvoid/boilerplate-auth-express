@@ -90,6 +90,16 @@ const updatePassword = async (password = passwords) => {
     })
   return agent
 }
+const updateUser = async (data = updateData) => {
+  await createUser()
+  const userCookie = await loginUser()
+  const cookies = userCookie.headers['set-cookie']
+  const agent = await request(app).patch('/api/v1/users/updateUser').set('cookie', cookies).send({
+    name: data.name,
+    email: data.email,
+  })
+  return agent
+}
 
 const validUser = {
   name: 'Delvoid',
@@ -99,6 +109,10 @@ const validUser = {
 const passwords = {
   oldPassword: validUser.password,
   newPassword: 'Delvoid312.',
+}
+const updateData = {
+  name: 'Void',
+  email: 'updated@gmail.com',
 }
 describe('Update user password', () => {
   describe('PATCH /api/v1/users/updateUserPassword', () => {
@@ -131,6 +145,30 @@ describe('Update user password', () => {
       const isMatch = await bcrypt.compare(passwords.newPassword, user.password)
 
       expect(isMatch).toBeTruthy()
+    })
+  })
+  describe('Update user details', () => {
+    describe('PATCH /api/v1/users/updateUser', () => {
+      it('returns 401 when request without basic auth', async () => {
+        const res = await request(app).patch('/api/v1/users/updateUser')
+        expect(res.status).toBe(401)
+      })
+      it('returns 200 with msg on valid request', async () => {
+        const res = await updateUser()
+        const user = await UserModel.findOne({})
+
+        expect(res.status).toBe(200)
+        expect(user.name).toBe(updateData.name)
+        expect(user.email).toBe(updateData.email)
+      })
+      it('returns 400 if name is missing', async () => {
+        const res = await updateUser({ ...updateUser, name: '' })
+        expect(res.status).toBe(400)
+      })
+      it('returns 400 if email is missing', async () => {
+        const res = await updateUser({ ...updateUser, email: '' })
+        expect(res.status).toBe(400)
+      })
     })
   })
 })

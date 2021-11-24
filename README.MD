@@ -500,17 +500,24 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Get current user
 
-- [] returns 401 if not authorised
-- [] returns 200 and logged in user object without password if authorised
+- [x] returns 401 if not authorised
+- [x] returns 200 and logged in user object without password if authorised
 
 #### Update password
 
-- [] returns 200 with msg on valid request
-- [] returns 400 if oldPassword is missing
-- [] returns 400 if newPassword is missing
-- [] returns 401 if passwords do not match
-- [] returns 400 if password is not pass validation
-- [] updates the password in database when the request is valid
+- [x] returns 200 with msg on valid request
+- [x] returns 400 if oldPassword is missing
+- [x] returns 400 if newPassword is missing
+- [x] returns 401 if passwords do not match
+- [x] returns 400 if password is not pass validation
+- [x] updates the password in database when the request is valid
+
+#### Update user
+
+- [x] returns 401 when request without basic auth
+- [x] returns 200 with msg on valid request
+- [x] returns 400 if name is missing
+- [x] returns 400 if email is missing
 
 #### Get user tokens
 
