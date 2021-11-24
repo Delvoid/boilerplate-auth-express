@@ -92,9 +92,6 @@ describe('Get current user', () => {
       const userCookies = user.headers['set-cookie']
 
       const res = await request(app).get('/api/v1/users/showMe').set('cookie', userCookies)
-
-      console.log(res.body)
-
       expect(res.status).toBe(200)
       expect(Object.keys(res.body.user)).toEqual([
         '_id',
