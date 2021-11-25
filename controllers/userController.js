@@ -63,7 +63,6 @@ const updateUserPassword = async (req, res) => {
 const getUserTokens = async (req, res) => {
   let { id } = req.params
   if (!id) id = req.user.userId
-  console.log(id)
   if (id) {
     if (!ObjectId.isValid(id)) throw new CustomError.BadRequest('Invalid request')
   }

@@ -19,6 +19,43 @@ Goal is to create a boilerplate project for users authentication. With the follo
   </br>
   </br>
 
+### Installation
+
+1. Create mongoDB and setup [MongoDB](https://www.mongodb.com/)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/Delvoid/boilerplate-auth-express.git
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your MongoDB API's in .env
+
+   ```js
+      MONGO_URI = ENTER YOUR MONOGO API
+      JWT_SECRET= YOUR SECRET
+      JWT_LIFETIME= LIFETIME
+   ```
+
+   Run the tests
+
+   ```js
+   npm test
+   ```
+
+   Start the dev server
+
+   ```js
+   npm run dev
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Roadmap
+
+  </br>
+
 <details>
 <summary>Setup Basic Express Server</summary>
 
@@ -397,9 +434,12 @@ Goal is to create a boilerplate project for users authentication. With the follo
 </details>
 </br>
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### TESTS
 
-#### setup
+<details>
+<summary>Setup</summary>
 
 - [x] install supertest
 - [x] install smtp-server
@@ -407,7 +447,10 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] refacter app.js for supertest
 - [x] create package script test
 
-#### Register User
+</details>
+
+<details>
+<summary>Register User</summary>
 
 - [x] beforeAll connect to DB
 - [x] afterAll disconnect from DB
@@ -430,7 +473,10 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] first user is created has a role of admin
 - [x] second user is created has a role of user
 
-#### Verify Email
+</details>
+
+<details>
+<summary>Verify Email</summary>
 
 - [x] verifies the email when correct token is sent
 - [x] removes the token from user table after successful verification
@@ -440,14 +486,20 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] returns unauthorised request when token is wrong
 - [x] returns unauthorised request when email is wrong
 
-#### Error Model
+</details>
+
+<details>
+<summary>Error Model</summary>
 
 - [x] returns path, timestamp, message and validationErrors in response when validation failure
 - [x] returns path, timestamp and message in response when request fails other than validation error
 - [x] returns path in error body
 - [x] returns timestamp in milliseconds within 5 seconds value in error body
 
-#### Login
+</details>
+
+<details>
+<summary>Login</summary>
 
 - [x] returns 200 when credentials are correct
 - [x] returns tokenUser: name, userId, role when login success
@@ -461,13 +513,19 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] returns 400 when password is missing
 - [x] returns 401 when logging in with an unverified account
 
-#### Logout
+</details>
+
+<details>
+<summary>Logout</summary>
 
 - [x] returns 401 ok when unathorized request send for logout
 - [x] removes tokens from database
 - [x] removes stored cookies
 
-#### Forgot password
+</details>
+
+<details>
+<summary>Forgot password</summary>
 
 - [x] return 200 with msg
 - [x] creates password reset token on valid email and user
@@ -476,7 +534,10 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] sends email if valid user is found
 - [x] returns 502 when bad gateway when sending email fails
 
-#### Reset password
+</details>
+
+<details>
+<summary>Reset password</summary>
 
 - [x] returns 403 when password update request does not have the valid password reset token
 - [x] returns 400 when trying to update with invalid password and the reset token is valid
@@ -485,25 +546,37 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] clears the reset token in database when the request is valid
 - [x] verifys email if unverified after valid password reset
 
-#### Get users
+</details>
+
+<details>
+<summary>Get users</summary>
 
 - [x] returns 403 if not authorised
 - [x] returns 200 when valid auth and role admin
 - [x] returns users list when valid auth and role admin
 
-#### Get single user
+</details>
+
+<details>
+<summary>Get single user</summary>
 
 - [x] returns 404 when user is not found
 - [x] returns correct error body when user not found
 - [x] returns 200 on valid user when admin
 - [x] returns 401 when basic user tries to get another user
 
-#### Get current user
+</details>
+
+<details>
+<summary>Get current user</summary>
 
 - [x] returns 401 if not authorised
 - [x] returns 200 and logged in user object without password if authorised
 
-#### Update password
+</details>
+
+<details>
+<summary>Update password</summary>
 
 - [x] returns 200 with msg on valid request
 - [x] returns 400 if oldPassword is missing
@@ -512,14 +585,20 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] returns 400 if password is not pass validation
 - [x] updates the password in database when the request is valid
 
-#### Update user
+</details>
+
+<details>
+<summary>Update User</summary>
 
 - [x] returns 401 when request without basic auth
 - [x] returns 200 with msg on valid request
 - [x] returns 400 if name is missing
 - [x] returns 400 if email is missing
 
-#### Get user tokens
+</details>
+
+<details>
+<summary>Get user tokens</summary>
 
 - [x] returns 200 if valid auth
 - [x] returns logged in users tokens if no id is passed
@@ -528,16 +607,20 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [x] returns 403 if a user tries to get another users tokens
 - [x] returns 200 if a admin tries to get other users tokens
 
-#### Token expiration
+</details>
+
+#### Token expiration - TODO
 
 - [] returns 403 when refresh token is 30days old
 - [] refreshes token if expiered and refresh token is valid
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Docs, secruity and deploy
 
 #### logging
 
-- [] should i add? - think about it
+- [] should i add? - to think about it
 
 #### Create Docs
 
@@ -548,11 +631,10 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Security Packages
 
-- [] express-rate-limiter - needed?
-- [] helmet
-- [] xss-clean
-- [] express-mongo-sanitize
-- [] cors (cookies!!!!)
+- [] express-rate-limiter - is this needed?
+- [x] helmet
+- [x] xss-clean
+- [x] cors (cookies!!!!)
 
 #### Deploy on Heroku
 
@@ -568,3 +650,5 @@ Goal is to create a boilerplate project for users authentication. With the follo
 - [] git remote -v
 - [] setup env vars in GUI
 - [] git push heroku master/main
+
+<p align="right">(<a href="#top">back to top</a>)</p>
