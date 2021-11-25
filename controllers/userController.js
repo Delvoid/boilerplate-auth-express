@@ -75,6 +75,7 @@ const getUserTokens = async (req, res) => {
 
 module.exports = {
   getAllUsers,
+
   getUserById,
   showCurrentUser,
   updateUser,

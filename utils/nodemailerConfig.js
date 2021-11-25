@@ -10,8 +10,8 @@ const dev = {
   host: 'smtp.ethereal.email',
   port: 587,
   auth: {
-    user: 'einar.hagenes99@ethereal.email',
-    pass: '8AQXjjKNMMt8gHHCDq',
+    user: process.env.ETHEREAL_EMAIL,
+    pass: process.env.ETHEREAL_PASS,
   },
   tld: {
     rejectUnauthorized: false,
