@@ -521,11 +521,12 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Get user tokens
 
-- [] returns 200 if valid auth
-- [] returns logged in users tokens if no id is passed
-- [] returns 400 if invalid id
-- [] returns 401 if a user tries to get another users tokens
-- [] returns 200 if a admin tries to get other users tokens
+- [x] returns 200 if valid auth
+- [x] returns logged in users tokens if no id is passed
+- [x] returns logged in users tokens if id is passed
+- [x] returns 400 if invalid id
+- [x] returns 403 if a user tries to get another users tokens
+- [x] returns 200 if a admin tries to get other users tokens
 
 #### Token expiration
 

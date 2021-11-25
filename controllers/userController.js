@@ -63,13 +63,14 @@ const updateUserPassword = async (req, res) => {
 const getUserTokens = async (req, res) => {
   let { id } = req.params
   if (!id) id = req.user.userId
+  console.log(id)
   if (id) {
     if (!ObjectId.isValid(id)) throw new CustomError.BadRequest('Invalid request')
   }
   const tokens = await TokenModel.find({
     user: id,
   })
-  checkPermissions(req.user, user._id)
+  checkPermissions(req.user, id)
   res.status(StatusCodes.OK).json({ tokens })
 }
 
