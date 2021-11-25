@@ -638,17 +638,14 @@ Goal is to create a boilerplate project for users authentication. With the follo
 
 #### Deploy on Heroku
 
-- [] heroku account and heroku cli
-- [] add dev command "nodemon app.js"
-- [] change start to "node app.js"
-- [] setup node version in package.json
-- [] "engines": {"node": "16.x"}
-- [] Procfile "web: node app.js"
-- [] git commit latest changes
-- [] heroku login
-- [] heroku create "App Name"
-- [] git remote -v
-- [] setup env vars in GUI
-- [] git push heroku master/main
+- [x] heroku account and heroku cli
+- [x] add dev command "nodemon app.js"
+- [x] change start to "node app.js"
+- [x] setup node version in package.json
+- [x] git commit latest changes
+- [x] heroku login
+- [x] heroku create "App Name"
+- [x] setup env vars in heroku
+- [x] git push heroku
 
 <p align="right">(<a href="#top">back to top</a>)</p>
