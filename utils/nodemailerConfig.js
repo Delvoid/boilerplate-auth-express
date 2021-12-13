@@ -7,11 +7,10 @@ const test = {
 }
 
 const dev = {
-  host: 'smtp.ethereal.email',
-  port: 587,
+  service: 'gmail',
   auth: {
-    user: process.env.ETHEREAL_EMAIL,
-    pass: process.env.ETHEREAL_PASS,
+    user: process.env.PROD_EMAIL,
+    pass: process.env.PROD_EMAIL_PASS,
   },
   tld: {
     rejectUnauthorized: false,

@@ -7,7 +7,7 @@ const sendEmail = async ({ to, subject, html }) => {
   const transporter = nodemailer.createTransport(nodemailerConfig)
 
   return transporter.sendMail({
-    from: '"Delvoid Test" <delvoid.dev@gmail.com>', // sender address
+    from: '"Delvoid Auth" <delvoid.auth@gmail.com>', // sender address
     to,
     subject,
     html,
